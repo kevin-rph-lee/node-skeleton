@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router  = express.Router();
 
 module.exports = (knex, brcypt) => {
 
-  router.get("/", (req, res) => {
+  router.get('/', (req, res) => {
     knex('users')
       .select('*')
       .from('users')
@@ -15,7 +15,7 @@ module.exports = (knex, brcypt) => {
 
   })
 
-  router.post("/login", (req, res) => {
+  router.post('/login', (req, res) => {
     knex('users')
       .select('*')
       .from('users')
@@ -24,6 +24,7 @@ module.exports = (knex, brcypt) => {
         if(results.length === 0){
           return res.sendStatus(404);
         } else if(bcrypt.compareSync(password, results[0].password)) {
+          req.session.userID = results[0].id;
           return res.sendStatus(200);
         } else {
           return res.sendStatus(403);
