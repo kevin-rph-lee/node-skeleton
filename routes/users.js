@@ -6,8 +6,14 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.get("/", (req, res) => {
-    //Example Route
-  });
+    knex('users')
+      .select('*')
+      .from('users')
+      .then((results) => {
+        res.send(results);
+      })
+
+  })
 
   return router;
 }
